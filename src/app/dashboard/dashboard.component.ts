@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
-import { ClientService } from '../services/client.service'; 
+import { ClientService } from '../services/client.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -113,12 +113,31 @@ export class DashboardComponent implements OnInit {
   constructor(private clientService: ClientService) {}
 
   ngOnInit(): void {
-    this.obtenerEstadisticas();
     this.clientService.getClients().subscribe(data => {
-      this.edadesIndividuales = data.users.map((user: any) => user.age);
-
+      this.procesarDatos(data.users);
+    }, error => {
+      console.error('Error al obtener los datos:', error);
     });
   }
+
+  procesarDatos(users: any[]): void {
+    this.totalClientes = users.length;
+    this.promedioEdad = users.reduce((sum, user) => sum + (user.age || 0), 0) / users.length || 0;
+    this.edadesIndividuales = users.map(user => user.age);
+
+    this.distribucionGenero = users.reduce((acc: any, user: any) => {
+      const genero = user.gender.charAt(0).toUpperCase() + user.gender.slice(1);
+      acc[genero] = (acc[genero] || 0) + 1;
+      return acc;
+    }, {});
+
+    this.ciudades = this.getDistribucionPorCiudad(users);
+    this.paises = this.getDistribucionPorPais(users);
+    this.telefonos = this.getDistribucionPorTelefono(users);
+
+    this.actualizarDatosGraficos();
+  }
+
 
   obtenerEstadisticas(): void {
     this.clientService.getClients().subscribe(data => {
@@ -175,36 +194,53 @@ export class DashboardComponent implements OnInit {
   getDistribucionPorTelefono(users: any[]): any[] {
     const distribucion: any = {};
     users.forEach((user: any) => {
-      const telefono = user.phone;
-      const prefijo = telefono.substring(0, telefono.indexOf(' '));
+      const telefono = user.phone || 'Desconocido';
+      const prefijo = telefono.includes(' ') ? telefono.split(' ')[0] : 'Otro';
       distribucion[prefijo] = (distribucion[prefijo] || 0) + 1;
     });
     return Object.keys(distribucion).map(prefix => ({ prefix, count: distribucion[prefix] }));
   }
 
+
   actualizarDatosGraficos(): void {
-    this.clientesChartData.datasets[0].data = [this.totalClientes];
+    this.clientesChartData = { ...this.clientesChartData, datasets: [{ ...this.clientesChartData.datasets[0], data: [this.totalClientes] }] };
 
-    this.generoChartData.datasets[0].data = [
-      this.distribucionGenero['Male'] || 0,
-      this.distribucionGenero['Female'] || 0,
-      this.distribucionGenero['Other'] || 0
-    ];
+    this.generoChartData = {
+      ...this.generoChartData,
+      datasets: [{
+        ...this.generoChartData.datasets[0],
+        data: [
+          this.distribucionGenero['Male'] || 0,
+          this.distribucionGenero['Female'] || 0,
+          this.distribucionGenero['Other'] || 0
+        ]
+      }]
+    };
 
-    this.edadChartData.datasets[0].data = [this.promedioEdad];
+    this.edadChartData = {
+      ...this.edadChartData,
+      datasets: [{ ...this.edadChartData.datasets[0], data: [this.promedioEdad] }]
+    };
 
+    this.ciudadChartData = {
+      ...this.ciudadChartData,
+      labels: this.ciudades.map(ciudad => ciudad.name),
+      datasets: [{ ...this.ciudadChartData.datasets[0], data: this.ciudades.map(ciudad => ciudad.count) }]
+    };
 
-    this.ciudadChartData.labels = this.ciudades.map(ciudad => ciudad.name);
-    this.ciudadChartData.datasets[0].data = this.ciudades.map(ciudad => ciudad.count);
+    this.paisChartData = {
+      ...this.paisChartData,
+      labels: this.paises.map(pais => pais.name),
+      datasets: [{ ...this.paisChartData.datasets[0], data: this.paises.map(pais => pais.count) }]
+    };
 
-
-    this.paisChartData.labels = this.paises.map(pais => pais.name);
-    this.paisChartData.datasets[0].data = this.paises.map(pais => pais.count);
-
-
-    this.telefonoChartData.labels = this.telefonos.map(telefono => telefono.prefix);
-    this.telefonoChartData.datasets[0].data = this.telefonos.map(telefono => telefono.count);
+    this.telefonoChartData = {
+      ...this.telefonoChartData,
+      labels: this.telefonos.map(telefono => telefono.prefix),
+      datasets: [{ ...this.telefonoChartData.datasets[0], data: this.telefonos.map(telefono => telefono.count) }]
+    };
   }
+
 
   onCardClick(card: string): void {
     this.selectedCard = card;

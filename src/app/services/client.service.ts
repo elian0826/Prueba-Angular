@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 const API_URL = 'https://dummyjson.com/users';
 
@@ -22,6 +22,10 @@ export class ClientService {
         map(response => {
           this.clients = response.users;
           return { users: this.clients };
+        }),
+        catchError(error => {
+          console.error('Error al obtener clientes:', error);
+          return throwError(() => new Error('Error al obtener la lista de clientes'));
         })
       );
     }
@@ -30,12 +34,16 @@ export class ClientService {
   /** Obtiene un cliente por su ID */
   getClientById(id: number): Observable<any> {
     const client = this.clients.find(c => c.id === id);
-    return of(client);
+    if (client) {
+      return of(client);
+    } else {
+      return throwError(() => new Error(`Cliente con ID ${id} no encontrado`));
+    }
   }
 
   /** Agrega un cliente (solo en memoria) */
   addClient(client: any): Observable<any> {
-    client.id = this.clients.length + 1; // Genera un ID manualmente
+    client.id = this.clients.length + 1; 
     this.clients.push(client);
     return of(client);
   }
@@ -47,13 +55,18 @@ export class ClientService {
       this.clients[index] = { ...this.clients[index], ...client };
       return of(this.clients[index]);
     }
-    return of(null);
+    return throwError(() => new Error(`Cliente con ID ${id} no encontrado`));
   }
 
   /** Elimina un cliente (solo en memoria) */
   deleteClient(id: number): Observable<any> {
+    const initialLength = this.clients.length;
     this.clients = this.clients.filter(c => c.id !== id);
-    return of({ message: 'Cliente eliminado' });
+    if (this.clients.length < initialLength) {
+      return of({ message: 'Cliente eliminado' });
+    } else {
+      return throwError(() => new Error(`Cliente con ID ${id} no encontrado`));
+    }
   }
 }
 

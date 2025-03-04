@@ -11,6 +11,6 @@ export class DashboardService {
   constructor(private http: HttpClient) {}
 
   getUsuarios(): Observable<any> {
-    return this.http.get<any>(this.apiUrl); // Aquí obtenemos la respuesta completa de la API
+    return this.http.get<any>(this.apiUrl); 
   }
 }

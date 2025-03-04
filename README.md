@@ -12,20 +12,21 @@ Me enfoqué en cumplir con los requisitos solicitados en la prueba, asegurando l
 - Validaciones en formularios con **Reactive Forms**.  
 - Una Dashboard interactiva con gráficos dinámicos.  
 - Uso de una arquitectura modular para escalabilidad.  
+- Implementación de **Standalone Components** para mejorar el rendimiento y facilitar la reutilización de componentes.  
 
-En las siguientes secciones explicaré cómo instalar, configurar y utilizar la aplicación.  
+En las siguientes secciones explicaré cómo instalé, configuré y desarrollé la aplicación.  
 
 ## Instalación y configuración del proyecto  
 
-### 1️. Creación del entorno de trabajo  
+### 1. Creación del entorno de trabajo  
 
-Para organizar mejor el proyecto, creé una carpeta en la unidad **C:** dentro de una carpeta llamada **Programación**, llame otra carpeta **angular**.  Para asi poder iniciar el proyecto 
+Para organizar mejor el proyecto, creé una carpeta en la unidad **C:** dentro de una carpeta llamada **Programación**, y dentro de ella una subcarpeta llamada **angular**.  
 
- **Ubicación del proyecto:**  
+**Ubicación del proyecto:**  
 
-C:\Programación\angular  
+`C:\Programación\angular`  
 
-### 2️. Instalación de Angular CLI  
+### 2. Instalación de Angular CLI  
 
 Para desarrollar en Angular, instalé **Angular CLI** (Command Line Interface) globalmente con el siguiente comando:  
 
@@ -33,7 +34,7 @@ Para desarrollar en Angular, instalé **Angular CLI** (Command Line Interface) g
 npm install -g @angular/cli
 ```  
 
-## 3️. Creación del proyecto  
+### 3. Creación del proyecto  
 
 Dentro de la carpeta angular, generé el proyecto llamado **gestion-clientes** con el siguiente comando:  
 
@@ -49,26 +50,17 @@ ng serve
 
 Cuando vi que el servidor se ejecutó correctamente mostrando la pantalla de inicio de Angular, comencé a estructurar las carpetas necesarias para el CRUD.  
 
-Creé una carpeta llamada **clients** y dentro de ella dos subcarpetas: **form** y **list**, usando los siguientes comandos:  
+## Implementación de Standalone Components  
+
+Para mejorar la modularidad y el rendimiento de la aplicación, decidí utilizar **Standalone Components** en lugar de módulos tradicionales. Esto permitió reducir dependencias innecesarias y simplificar la estructura del proyecto.  
+
+Ejemplo de un Standalone Component para la lista de clientes:
 
 ```sh
-ng generate component clients/form
-ng generate component clients/list
-```  
+ng generate component clients/list --standalone
+```
 
-Esto generó la siguiente estructura:  
-
- **src/app/clients/form/**  
-- form.component.ts  
-- form.component.html  
-- form.component.css  
-
- **src/app/clients/list/**  
-- list.component.ts  
-- list.component.html  
-- list.component.css  
-
-Con esto, ya tenía la estructura base para desarrollar las funcionalidades del CRUD.  
+Cada componente independiente incluye sus propias dependencias y puede ser utilizado sin necesidad de declararlo dentro de un módulo. Esto hizo que la aplicación fuera más eficiente y escalable.  
 
 ## Componente FormComponent  
 
@@ -83,28 +75,6 @@ Este componente es un formulario que permite agregar o editar clientes. Lo const
   - Si no hay cliente, permite agregar uno nuevo generando un ID aleatorio.  
 - **Persistencia en memoria:** Usa `ClientService` para agregar o actualizar clientes en la base de datos en memoria.  
 - **Cierre del formulario:** Al guardar o cancelar, emite un evento `@Output()` para cerrar el modal.  
-
-Este componente es reutilizable y puede integrarse fácilmente en otros módulos de la aplicación.  
-
-## Componente ListComponent  
-
-Este módulo gestiona la lista de clientes, permitiendo ver, agregar, editar y eliminar clientes.  
-
-La estructura del módulo es la siguiente:  
-
-- **list.component.html** → Muestra la tabla de clientes con botones para editar/eliminar.  
-- **list.component.ts** → Carga los clientes desde `ClientService`, maneja el modal y la eliminación.  
-- **list.component.css** → Aplica estilos a la tabla y botones.  
-- **clients-routing.module.ts** → Define la ruta `/clients` para mostrar `ListComponent`.  
-- **clients.module.ts** → Agrupa `ListComponent` y `FormComponent`, además importa módulos necesarios.  
-
-Para manejar los formularios reactivos, instalé la dependencia de **@angular/forms** con el siguiente comando:  
-
-```sh
-npm install @angular/forms
-```  
-
-Cuando se elimina un cliente en la **Gestión de Usuarios**, la **Dashboard** se actualiza automáticamente para reflejar los cambios.  
 
 ## Dashboard  
 
@@ -143,18 +113,12 @@ Implementé dos servicios principales en Angular para manejar los datos de los u
 - Obtiene los datos de la API (https://dummyjson.com/users) y los guarda en memoria.  
 - Permite agregar, editar y eliminar usuarios mientras la aplicación está corriendo, pero los cambios se perderán al recargar.  
 
-**Métodos clave:**  
-- `getClients()`: Obtiene usuarios de la API o memoria.  
-- `getClientById(id)`: Busca un usuario en memoria.  
-- `addClient(client)`: Agrega un nuevo usuario en memoria.  
-- `updateClient(id, client)`: Edita un usuario en memoria.  
-- `deleteClient(id)`: Elimina un usuario en memoria.  
-
 ### **DashboardService (dashboard.service.ts)**  
 
 - Obtiene usuarios directamente de la API sin almacenarlos en memoria.  
 
-En los archivos de **app.component**, integré todo lo desarrollado, mostrando la **Gestión de Usuarios** y la **Dashboard** dentro del proyecto.  
+Cuando se elimina un cliente en la **Gestión de Usuarios**, la **Dashboard** se actualiza automáticamente para reflejar los cambios.  
 
 ---  
-Con esto, logré desarrollar una aplicación funcional y modular, asegurando que cumpliera con los requisitos de la prueba técnica. 
+Con esto, logré desarrollar una aplicación funcional y modular, asegurando que cumpliera con los requisitos de la prueba técnica.
+

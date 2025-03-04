@@ -44,11 +44,17 @@ export class ListComponent implements OnInit {
   deleteClient(id: number): void {
     if (confirm('¿Seguro que quieres eliminar este cliente?')) {
       this.clientService.deleteClient(id).subscribe(() => {
-        this.loadClients();
+        // Filtra la lista localmente sin volver a llamar a la API
+        this.clients = this.clients.filter(client => client.id !== id);
         this.clientChanged.emit();
+      }, error => {
+        console.error('Error al eliminar cliente:', error);
+        alert('No se pudo eliminar el cliente.');
       });
     }
   }
+
+
 
   openModal(client: any = null): void {
     this.selectedClient = client;

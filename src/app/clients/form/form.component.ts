@@ -32,31 +32,34 @@ export class FormComponent {
 
   ngOnInit(): void {
     if (this.client) {
-      this.clientForm.patchValue(this.client);
+      this.clientForm.patchValue({ ...this.client });
     }
   }
 
   saveClient(): void {
-    if (this.client) {
-      this.clientService.updateClient(this.client.id, this.clientForm.value).subscribe(() => {
-        this.close.emit();
-      });
-    } else {
-      const newClient = {
-        ...this.clientForm.value,
-        id: Math.floor(Math.random() * 1000) + 30,
-        address: {
-          country: this.clientForm.value.country,
-          city: this.clientForm.value.city
-        }
-      };
+    if (this.clientForm.invalid) return;
 
-      this.clientService.addClient(newClient).subscribe(() => {
-        this.close.emit();
+    const clientData = {
+      ...this.clientForm.value,
+      id: this.client ? this.client.id : Math.floor(Math.random() * 1000) + 30,
+      address: {
+        country: this.clientForm.value.country,
+        city: this.clientForm.value.city
+      }
+    };
+
+    const request$ = this.client
+      ? this.clientService.updateClient(clientData.id, clientData)
+      : this.clientService.addClient(clientData);
+
+      request$.subscribe({
+        next: () => this.close.emit(),
+        error: (err) => console.error('Error al guardar el cliente', err)
       });
-    }
   }
-}
+
+    }
+
 
 
 

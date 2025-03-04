@@ -22,8 +22,11 @@
       <div class="form-group custom-form-group">
         <label class="custom-label">Email:</label>
         <input type="email" formControlName="email" class="custom-input" placeholder="Ingrese el email">
-        <small *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched" class="error custom-error">
-          Email inválido.
+        <small *ngIf="clientForm.get('email')?.hasError('required') && clientForm.get('email')?.touched" class="error custom-error">
+          El email es obligatorio.
+        </small>
+        <small *ngIf="clientForm.get('email')?.hasError('email') && clientForm.get('email')?.touched" class="error custom-error">
+          Formato de email incorrecto.
         </small>
       </div>
 
