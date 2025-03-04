@@ -1,0 +1,85 @@
+<div class="statistics">
+  <!-- Tarjeta para mostrar el total de clientes -->
+  <div class="stat-card" (click)="onCardClick('clientes')">
+    <h3>Total de Clientes</h3>
+  </div>
+
+
+  <!-- Tarjeta para mostrar el promedio de edad -->
+  <div class="stat-card" (click)="onCardClick('edad')">
+    <h3>Promedio de Edad</h3>
+  </div>
+
+  <!-- Tarjeta para mostrar la distribución por género -->
+  <div class="stat-card" (click)="onCardClick('genero')">
+    <h3>Distribución por Género</h3>
+  </div>
+
+  <!-- Tarjeta para mostrar la distribución por ciudad -->
+  <div class="stat-card" (click)="onCardClick('ciudad')">
+    <h3>Distribución por Ciudad</h3>
+  </div>
+
+  <!-- Tarjeta para mostrar la distribución por país -->
+  <div class="stat-card" (click)="onCardClick('pais')">
+    <h3>Distribución por País</h3>
+  </div>
+
+  <!-- Tarjeta para mostrar la distribución por teléfono (por prefijo) -->
+  <div class="stat-card" (click)="onCardClick('telefono')">
+    <h3>Distribución por Teléfono (por prefijo)</h3>
+  </div>
+</div>
+
+<!-- Gráfico de Clientes (Pie) -->
+<canvas *ngIf="selectedCard === 'clientes'" baseChart
+        [datasets]="clientesChartData.datasets"
+        [labels]="clientesChartData.labels"
+        [options]="chartOptionsPie"
+        [legend]="chartLegend"
+        chartType="pie">
+</canvas>
+
+
+<canvas *ngIf="selectedCard === 'edad'" baseChart
+        [datasets]="edadChartData.datasets"
+        [labels]="edadChartData.labels"
+        [options]="chartOptionsBar"
+        [legend]="chartLegend"
+        chartType="bar">
+</canvas>
+
+<!-- Gráfico de Género (Pie) -->
+<canvas *ngIf="selectedCard === 'genero'" baseChart
+        [datasets]="generoChartData.datasets"
+        [labels]="generoChartData.labels"
+        [options]="chartOptionsPie"
+        [legend]="chartLegend"
+        chartType="pie">
+</canvas>
+
+<canvas *ngIf="selectedCard === 'ciudad'" baseChart
+        [datasets]="ciudadChartData.datasets"
+        [labels]="ciudadChartData.labels"
+        [options]="chartOptionsBar"
+        [legend]="chartLegend"
+        chartType="bar">
+</canvas>
+
+<!-- Gráfico de País (Bar) -->
+<canvas *ngIf="selectedCard === 'pais'" baseChart
+        [datasets]="paisChartData.datasets"
+        [labels]="paisChartData.labels"
+        [options]="chartOptionsBar"
+        [legend]="chartLegend"
+        chartType="bar">
+</canvas>
+
+<!-- Gráfico de Teléfono (Pie) -->
+<canvas *ngIf="selectedCard === 'telefono'" baseChart
+        [datasets]="telefonoChartData.datasets"
+        [labels]="telefonoChartData.labels"
+        [options]="chartOptionsPie"
+        [legend]="chartLegend"
+        chartType="pie">
+</canvas>

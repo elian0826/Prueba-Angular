@@ -1,0 +1,66 @@
+.statistics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Compactas y ajustables */
+  gap: 20px; /* Espaciado uniforme */
+  padding: 20px;
+  justify-content: center;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  max-width: 220px; /* Controla el ancho */
+  height: 130px; /* Altura fija */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra contenido */
+}
+
+.stat-card h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.stat-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+/* 📌 Tablet (Hasta 1024px) */
+@media (max-width: 1024px) {
+  .statistics {
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    gap: 15px;
+  }
+}
+
+/* 📌 Móviles Grandes (Hasta 768px) */
+@media (max-width: 768px) {
+  .statistics {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+    gap: 12px;
+  }
+}
+
+/* 📌 Móviles Pequeños (Hasta 430px) */
+@media (max-width: 430px) {
+  .statistics {
+    grid-template-columns: 1fr; /* 1 sola columna */
+    gap: 10px;
+  }
+
+  .stat-card {
+    width: 90%; /* Se adapta mejor a la pantalla */
+    max-width: none;
+    height: auto; /* Se ajusta sin perder diseño */
+  }
+}

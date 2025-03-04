@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './clients/list/list.component';
 import { FormComponent } from './clients/form/form.component';
 
@@ -16,4 +17,14 @@ export const routes: Routes = [
   },
   { path: '**', redirectTo: 'clientes' }
 ];
+
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+
+
+
 

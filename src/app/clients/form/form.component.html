@@ -1,0 +1,70 @@
+<div class="modal-overlay custom-modal-overlay">
+  <div class="modal-content custom-modal-content">
+    <h3>{{ client ? 'Editar Cliente' : 'Agregar Cliente' }}</h3>
+
+    <form [formGroup]="clientForm" (ngSubmit)="saveClient()" class="custom-form">
+      <div class="form-group custom-form-group">
+        <label class="custom-label">Nombre:</label>
+        <input type="text" formControlName="firstName" class="custom-input" placeholder="Ingrese el nombre">
+        <small *ngIf="clientForm.get('firstName')?.invalid && clientForm.get('firstName')?.touched" class="error custom-error">
+          Nombre requerido.
+        </small>
+      </div>
+
+      <div class="form-group custom-form-group">
+        <label class="custom-label">Apellido:</label>
+        <input type="text" formControlName="lastName" class="custom-input" placeholder="Ingrese el apellido">
+        <small *ngIf="clientForm.get('lastName')?.invalid && clientForm.get('lastName')?.touched" class="error custom-error">
+          Apellido requerido.
+        </small>
+      </div>
+
+      <div class="form-group custom-form-group">
+        <label class="custom-label">Email:</label>
+        <input type="email" formControlName="email" class="custom-input" placeholder="Ingrese el email">
+        <small *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched" class="error custom-error">
+          Email inválido.
+        </small>
+      </div>
+
+      <div class="form-group custom-form-group">
+        <label class="custom-label">Teléfono:</label>
+        <input type="text" formControlName="phone" class="custom-input" placeholder="Ingrese el teléfono">
+      </div>
+
+      <div class="form-group custom-form-group">
+        <label class="custom-label">Edad:</label>
+        <input type="number" formControlName="age" class="custom-input" placeholder="Ingrese la edad">
+      </div>
+
+      <div class="form-group custom-form-group">
+        <label class="custom-label">Género:</label>
+        <select formControlName="gender" class="custom-select">
+          <option value="male">Masculino</option>
+          <option value="female">Femenino</option>
+          <option value="other">Otro</option>
+        </select>
+      </div>
+
+      <div class="form-group custom-form-group">
+        <label class="custom-label">País:</label>
+        <input type="text" formControlName="country" class="custom-input" placeholder="Ingrese el país">
+      </div>
+
+      <div class="form-group custom-form-group">
+        <label class="custom-label">Ciudad:</label>
+        <input type="text" formControlName="city" class="custom-input" placeholder="Ingrese la ciudad">
+      </div>
+
+      <div class="form-group custom-form-group">
+        <label class="custom-label">Dirección IP:</label>
+        <input type="text" formControlName="ip" class="custom-input" placeholder="Ingrese la IP">
+      </div>
+
+      <div class="button-group custom-button-group">
+        <button type="submit" class="btn btn-success custom-btn-success" [disabled]="clientForm.invalid">Guardar</button>
+        <button type="button" class="btn btn-danger custom-btn-danger" (click)="close.emit()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,188 @@
+/* Estilos generales del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh; /* Usa min-height para evitar que el modal cubra demasiado */
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto; /* Permite desplazamiento si el contenido es grande */
+  padding: 20px; /* Espaciado para evitar que el modal quede pegado a los bordes */
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 50%; /* Ajusta el ancho del modal */
+  max-width: 450px;
+  max-height: 90vh; /* Evita que el modal sea más alto que la pantalla */
+  overflow-y: auto; /* Agrega scroll si el contenido es demasiado grande */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Estilos del formulario */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  width: 30%;
+  text-align: left;
+}
+
+input, select {
+  width: 68%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+small.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Botones */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.btn {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 48%;
+}
+
+.btn-success {
+  background: #28a745;
+  color: white;
+}
+
+.btn-success:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c82333;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 80%; /* Aumenta el ancho en pantallas pequeñas */
+  }
+}
+
+@media (max-width: 500px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  label {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  input, select {
+    width: 100%;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
+}
+
+/* Responsividad para 430px o menos */
+@media (max-width: 430px) {
+  .modal-content {
+    width: 90%; /* Reduce un poco más el ancho */
+    padding: 18px;
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  label {
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 14px; /* Reduce el tamaño del texto */
+  }
+
+  input, select {
+    width: 100%;
+    padding: 8px; /* Reduce el padding para mejor ajuste */
+    font-size: 14px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .button-group {
+    flex-direction: column; /* Los botones irán uno debajo del otro */
+    gap: 10px; /* Espacio entre botones */
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+

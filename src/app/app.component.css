@@ -1,0 +1,180 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #FFFFFA;
+  font-family: Arial, sans-serif;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  padding: 10px;
+  background: #024959;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-toggle.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #d9534f;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  background: #024959;
+  transition: left 0.3s ease-in-out;
+  padding-top: 60px;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 15px;
+}
+
+.sidebar ul li a:hover {
+  background: #037E8C;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.overlay.active {
+  display: block;
+}
+
+.main-content {
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.main-content.shifted {
+  margin-left: 250px;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  margin: 0 auto;
+  font-size: 24px;
+}
+
+.menu-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  padding: 10px;
+  background: #024959;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 3;
+  width: auto;
+}
+
+.menu-toggle.close-btn {
+  right: 15px;
+  left: auto;
+  background: #d9534f;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Asegura que esté completamente fuera de la pantalla */
+  background: #024959;
+  transition: left 0.3s ease-in-out;
+  padding-top: 60px;
+  z-index: 10; /* Mantiene el menú encima */
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.main-content {
+  min-height: 100vh; /* Asegura que el contenido siempre tenga espacio */
+  overflow-x: hidden;
+}
+
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    left: -100%; /* Ocultar en móviles */
+    width: 80%;
+  }
+}
+
+
+/* 📌 Ajuste para escritorio */
+@media screen and (min-width: 1024px) {
+  .sidebar {
+    left: 0 !important;
+  }
+  .menu-toggle {
+    display: none !important;
+  }
+  .main-content {
+    margin-left: 250px !important;
+  }
+}
+
+/* 📌 Ajuste para móviles (hasta 768px) */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    left: -100%;
+    width: 80%;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .main-content.shifted {
+    margin-left: 0;
+  }
+}

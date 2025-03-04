@@ -1,0 +1,159 @@
+/* --- Contenedor principal --- */
+.client-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+/* --- Título centrado --- */
+.client-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+/* --- Botón "Agregar Cliente" alineado a la izquierda --- */
+.client-btn-add {
+  display: block;
+  margin-bottom: 15px;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease-in-out;
+  width: fit-content;
+}
+
+.client-btn-add:hover {
+  background-color: #0056b3;
+}
+
+/* --- Contenedor de la tabla para hacerla responsiva --- */
+.client-table-container {
+  width: 100%;
+  overflow-x: auto; /* Para evitar que los botones se salgan del contenedor */
+}
+
+/* --- Tabla responsiva --- */
+.client-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.client-table th,
+.client-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Para que los botones no se corten */
+}
+
+.client-table th {
+  background-color: #007bff;
+  color: white;
+  text-transform: uppercase;
+}
+
+/* --- Contenedor de botones dentro de la tabla --- */
+.client-actions {
+  display: flex;
+  gap: 8px; /* Espacio entre botones */
+  justify-content: center;
+}
+
+/* --- Botones de acción dentro de la tabla --- */
+.client-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease-in-out;
+}
+
+/* --- Estilos específicos de los botones --- */
+.client-btn-warning {
+  background-color: #ffc107; /* Amarillo */
+  color: black;
+}
+
+.client-btn-warning:hover {
+  background-color: #e0a800;
+}
+
+.client-btn-danger {
+  background-color: #dc3545; /* Rojo */
+  color: white;
+}
+
+.client-btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* --- Responsividad --- */
+@media (max-width: 768px) {
+  .client-table-container {
+    overflow-x: auto;
+  }
+
+  .client-table th,
+  .client-table td {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .client-actions {
+    flex-direction: column; /* En móviles los botones se apilan */
+    gap: 5px;
+  }
+
+  .client-btn {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 430px) {
+  .client-container {
+    padding: 10px;
+  }
+
+  .client-title {
+    font-size: 1.5rem;
+  }
+
+  .client-btn-add {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  .client-table {
+    font-size: 0.8rem;
+  }
+
+  .client-table th,
+  .client-table td {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+
+  .client-actions {
+    flex-direction: column; /* Los botones se apilan en pantallas pequeñas */
+    align-items: center;
+  }
+
+  .client-btn {
+    font-size: 0.7rem;
+    padding: 4px 6px;
+  }
+}

@@ -1,0 +1,48 @@
+<div class="client-container">
+  <!-- Título centrado -->
+  <h2 class="client-title">Lista de Clientes</h2>
+
+  <!-- Botón de agregar cliente alineado a la izquierda -->
+  <button class="client-btn-add" (click)="openModal()">Agregar Cliente</button>
+
+  <!-- Tabla de clientes -->
+  <div class="client-table-container">
+    <table class="client-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Género</th>
+          <th>Edad</th>
+          <th>IP</th>
+          <th>País</th>
+          <th>Ciudad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients">
+          <td>{{ client.id }}</td>
+          <td>{{ client.firstName }} {{ client.lastName }}</td>
+          <td>{{ client.email }}</td>
+          <td>{{ client.phone }}</td>
+          <td>{{ client.gender }}</td>
+          <td>{{ client.age }}</td>
+          <td>{{ client.ip }}</td>
+          <td>{{ client.country }}</td>
+          <td>{{ client.city }}</td>
+          <td class="client-actions">
+            <button class="client-btn client-btn-warning" (click)="openModal(client)">Editar</button>
+            <button class="client-btn client-btn-danger" (click)="deleteClient(client.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MODAL -->
+  <app-form *ngIf="showModal" [client]="selectedClient" (close)="closeModal()"></app-form>
+</div>
+
