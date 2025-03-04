@@ -1,4 +1,3 @@
-// list.component.ts
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClientService } from '../../services/client.service';
@@ -12,7 +11,7 @@ import { FormComponent } from '../form/form.component';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  @Output() clientChanged = new EventEmitter<void>(); // Emitimos un evento cuando hay cambios
+  @Output() clientChanged = new EventEmitter<void>();
   clients: any[] = [];
   showModal: boolean = false;
   selectedClient: any = null;
@@ -46,7 +45,7 @@ export class ListComponent implements OnInit {
     if (confirm('¿Seguro que quieres eliminar este cliente?')) {
       this.clientService.deleteClient(id).subscribe(() => {
         this.loadClients();
-        this.clientChanged.emit();  // Emitimos evento de cambio al eliminar
+        this.clientChanged.emit();
       });
     }
   }
@@ -59,6 +58,6 @@ export class ListComponent implements OnInit {
   closeModal(): void {
     this.showModal = false;
     this.loadClients();
-    this.clientChanged.emit();  // Emitimos evento de cambio al agregar/modificar
+    this.clientChanged.emit();
   }
 }

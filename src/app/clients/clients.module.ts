@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    ClientsRoutingModule,  // 🔹 IMPORTANTE: Se debe importar el módulo de rutas
+    ClientsRoutingModule,  
     ReactiveFormsModule
   ]
 })

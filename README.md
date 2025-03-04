@@ -1,59 +1,160 @@
-# GestionClientes
+# Proyecto: Gestión de Clientes - Frontend  
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+## Descripción  
 
-## Development server
+Desarrollé este proyecto en **Angular 19+** como parte de una prueba técnica orientada a la gestión de clientes. La aplicación permite realizar operaciones de **CRUD** (Crear, Leer, Actualizar y Eliminar) sobre una lista de clientes y presenta un **Dashboard** con métricas clave.  
 
-To start a local development server, run:
+El sistema está diseñado para consumir datos desde una API externa ([DummyJSON Users](https://dummyjson.com/users)) y manejar la información de manera dinámica. Implementé formularios avanzados con **Reactive Forms**, lo que permite validaciones y una mejor experiencia de usuario.  
 
-```bash
+Me enfoqué en cumplir con los requisitos solicitados en la prueba, asegurando lo siguiente:  
+
+- Un CRUD funcional y eficiente.  
+- Validaciones en formularios con **Reactive Forms**.  
+- Una Dashboard interactiva con gráficos dinámicos.  
+- Uso de una arquitectura modular para escalabilidad.  
+
+En las siguientes secciones explicaré cómo instalar, configurar y utilizar la aplicación.  
+
+## Instalación y configuración del proyecto  
+
+### 1️. Creación del entorno de trabajo  
+
+Para organizar mejor el proyecto, creé una carpeta en la unidad **C:** dentro de una carpeta llamada **Programación**, llame otra carpeta **angular**.  Para asi poder iniciar el proyecto 
+
+ **Ubicación del proyecto:**  
+
+C:\Programación\angular  
+
+### 2️. Instalación de Angular CLI  
+
+Para desarrollar en Angular, instalé **Angular CLI** (Command Line Interface) globalmente con el siguiente comando:  
+
+```sh
+npm install -g @angular/cli
+```  
+
+## 3️. Creación del proyecto  
+
+Dentro de la carpeta angular, generé el proyecto llamado **gestion-clientes** con el siguiente comando:  
+
+```sh
+ng new gestion-clientes
+```  
+
+Luego, me ubiqué dentro de la carpeta **gestion-clientes** y puse en marcha el servidor para comprobar que todo funcionara correctamente con:  
+
+```sh
 ng serve
-```
+```  
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Cuando vi que el servidor se ejecutó correctamente mostrando la pantalla de inicio de Angular, comencé a estructurar las carpetas necesarias para el CRUD.  
 
-## Code scaffolding
+Creé una carpeta llamada **clients** y dentro de ella dos subcarpetas: **form** y **list**, usando los siguientes comandos:  
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+```sh
+ng generate component clients/form
+ng generate component clients/list
+```  
 
-```bash
-ng generate component component-name
-```
+Esto generó la siguiente estructura:  
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+ **src/app/clients/form/**  
+- form.component.ts  
+- form.component.html  
+- form.component.css  
 
-```bash
-ng generate --help
-```
+ **src/app/clients/list/**  
+- list.component.ts  
+- list.component.html  
+- list.component.css  
 
-## Building
+Con esto, ya tenía la estructura base para desarrollar las funcionalidades del CRUD.  
 
-To build the project run:
+## Componente FormComponent  
 
-```bash
-ng build
-```
+Este componente es un formulario que permite agregar o editar clientes. Lo construí utilizando **ReactiveFormsModule** y **FormBuilder** para asegurar validaciones en los datos ingresados.  
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Funcionalidades  
 
-## Running unit tests
+- **Entrada de datos:** Permite ingresar información del cliente como nombre, apellido, email, teléfono, edad, género, país, ciudad e IP.  
+- **Validación:** Verifica que los campos obligatorios estén completos y que el email tenga un formato válido.  
+- **Modo edición y creación:**  
+  - Si recibe un cliente como `@Input()`, el formulario se llena con los datos existentes para editar.  
+  - Si no hay cliente, permite agregar uno nuevo generando un ID aleatorio.  
+- **Persistencia en memoria:** Usa `ClientService` para agregar o actualizar clientes en la base de datos en memoria.  
+- **Cierre del formulario:** Al guardar o cancelar, emite un evento `@Output()` para cerrar el modal.  
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Este componente es reutilizable y puede integrarse fácilmente en otros módulos de la aplicación.  
 
-```bash
-ng test
-```
+## Componente ListComponent  
 
-## Running end-to-end tests
+Este módulo gestiona la lista de clientes, permitiendo ver, agregar, editar y eliminar clientes.  
 
-For end-to-end (e2e) testing, run:
+La estructura del módulo es la siguiente:  
 
-```bash
-ng e2e
-```
+- **list.component.html** → Muestra la tabla de clientes con botones para editar/eliminar.  
+- **list.component.ts** → Carga los clientes desde `ClientService`, maneja el modal y la eliminación.  
+- **list.component.css** → Aplica estilos a la tabla y botones.  
+- **clients-routing.module.ts** → Define la ruta `/clients` para mostrar `ListComponent`.  
+- **clients.module.ts** → Agrupa `ListComponent` y `FormComponent`, además importa módulos necesarios.  
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Para manejar los formularios reactivos, instalé la dependencia de **@angular/forms** con el siguiente comando:  
 
-## Additional Resources
+```sh
+npm install @angular/forms
+```  
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Cuando se elimina un cliente en la **Gestión de Usuarios**, la **Dashboard** se actualiza automáticamente para reflejar los cambios.  
+
+## Dashboard  
+
+Este módulo proporciona una interfaz gráfica para visualizar estadísticas clave sobre los clientes. Utilicé **Angular** y **ng2-charts** para representar los datos en gráficos dinámicos.  
+
+Para implementarlo, seguí estos pasos:  
+
+1. Instalé las dependencias del proyecto:  
+   
+   ```sh
+   npm install
+   ```  
+
+2. Instalé las librerías para los gráficos:  
+   
+   ```sh
+   npm install ng2-charts chart.js
+   ```  
+
+### Funcionalidades de la Dashboard  
+
+- **Total de Clientes**  
+- **Promedio de Edad**  
+- **Distribución por Género**  
+- **Clientes por Ciudad/País**  
+- **Distribución por Teléfono**  
+
+La **Dashboard** no está dentro de la carpeta **clients**, sino en **app/dashboard**, ya que la diseñé como un módulo independiente para mayor flexibilidad.  
+
+## Servicios (/services)  
+
+Implementé dos servicios principales en Angular para manejar los datos de los usuarios:  
+
+### **ClientService (client.service.ts)**  
+
+- Obtiene los datos de la API (https://dummyjson.com/users) y los guarda en memoria.  
+- Permite agregar, editar y eliminar usuarios mientras la aplicación está corriendo, pero los cambios se perderán al recargar.  
+
+**Métodos clave:**  
+- `getClients()`: Obtiene usuarios de la API o memoria.  
+- `getClientById(id)`: Busca un usuario en memoria.  
+- `addClient(client)`: Agrega un nuevo usuario en memoria.  
+- `updateClient(id, client)`: Edita un usuario en memoria.  
+- `deleteClient(id)`: Elimina un usuario en memoria.  
+
+### **DashboardService (dashboard.service.ts)**  
+
+- Obtiene usuarios directamente de la API sin almacenarlos en memoria.  
+
+En los archivos de **app.component**, integré todo lo desarrollado, mostrando la **Gestión de Usuarios** y la **Dashboard** dentro del proyecto.  
+
+---  
+Con esto, logré desarrollar una aplicación funcional y modular, asegurando que cumpliera con los requisitos de la prueba técnica. 

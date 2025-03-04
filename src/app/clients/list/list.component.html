@@ -1,11 +1,11 @@
 <div class="client-container">
-  <!-- Título centrado -->
+
   <h2 class="client-title">Lista de Clientes</h2>
 
-  <!-- Botón de agregar cliente alineado a la izquierda -->
+
   <button class="client-btn-add" (click)="openModal()">Agregar Cliente</button>
 
-  <!-- Tabla de clientes -->
+
   <div class="client-table-container">
     <table class="client-table">
       <thead>
@@ -42,7 +42,6 @@
     </table>
   </div>
 
-  <!-- MODAL -->
   <app-form *ngIf="showModal" [client]="selectedClient" (close)="closeModal()"></app-form>
 </div>
 

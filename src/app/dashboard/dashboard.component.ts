@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
-import { ClientService } from '../services/client.service'; // Importar el servicio de cliente
+import { ClientService } from '../services/client.service'; 
 
 @Component({
   selector: 'app-dashboard',
@@ -18,8 +18,8 @@ export class DashboardComponent implements OnInit {
   ciudades: any[] = [];
   paises: any[] = [];
   telefonos: any[] = [];
-  edadesIndividuales: number[] = []; // NUEVA PROPIEDAD
-  mostrarEdadesIndividuales: boolean = false; // NUEVA PROPIEDAD
+  edadesIndividuales: number[] = [];
+  mostrarEdadesIndividuales: boolean = false;
 
   selectedCard: string = '';
 
@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     datasets: [
       {
         label: 'Clientes',
-        data: [this.totalClientes],  // Usando el total de clientes
+        data: [this.totalClientes],
         backgroundColor: ['blue'],
       }
     ]
@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
-  // Opciones específicas para cada gráfico (pie y bar)
+
   chartOptionsPie: ChartOptions = {
     responsive: true,
     plugins: {
@@ -122,32 +122,32 @@ export class DashboardComponent implements OnInit {
 
   obtenerEstadisticas(): void {
     this.clientService.getClients().subscribe(data => {
-      const users = data.users; // Acceder a la lista de usuarios desde la respuesta
+      const users = data.users;
 
       this.totalClientes = users.length;
 
-      // Calcular el promedio de edad
-      this.promedioEdad = users.reduce((sum: number, user: any) => sum + (user.age || 0), 0) / users.length || 0;
-      this.edadesIndividuales = users.map((user: any) => user.age); // SE AGREGA LA LISTA DE EDADES
- // SE AGREGA LA LISTA DE EDADES
 
-      // Calcular la distribución de género
+      this.promedioEdad = users.reduce((sum: number, user: any) => sum + (user.age || 0), 0) / users.length || 0;
+      this.edadesIndividuales = users.map((user: any) => user.age);
+
+
+
       this.distribucionGenero = users.reduce((acc: any, user: any) => {
         const genero = user.gender.charAt(0).toUpperCase() + user.gender.slice(1);
         acc[genero] = (acc[genero] || 0) + 1;
         return acc;
       }, {});
 
-      // Calcular la distribución por ciudad
+
       this.ciudades = this.getDistribucionPorCiudad(users);
 
-      // Calcular la distribución por país
+
       this.paises = this.getDistribucionPorPais(users);
 
-      // Calcular la distribución por teléfono (por prefijo)
+
       this.telefonos = this.getDistribucionPorTelefono(users);
 
-      // Actualizar los gráficos
+
       this.actualizarDatosGraficos();
     }, error => {
       console.error('Error al obtener los datos:', error);
@@ -157,7 +157,7 @@ export class DashboardComponent implements OnInit {
   getDistribucionPorCiudad(users: any[]): any[] {
     const distribucion: any = {};
     users.forEach((user: any) => {
-      const ciudad = user.address?.city || 'Desconocido'; // Evita errores si no tiene dirección
+      const ciudad = user.address?.city || 'Desconocido';
       distribucion[ciudad] = (distribucion[ciudad] || 0) + 1;
     });
     return Object.keys(distribucion).map(city => ({ name: city, count: distribucion[city] }));
@@ -166,7 +166,7 @@ export class DashboardComponent implements OnInit {
   getDistribucionPorPais(users: any[]): any[] {
     const distribucion: any = {};
     users.forEach((user: any) => {
-      const pais = user.address?.country || 'Desconocido'; // Evita errores
+      const pais = user.address?.country || 'Desconocido';
       distribucion[pais] = (distribucion[pais] || 0) + 1;
     });
     return Object.keys(distribucion).map(country => ({ name: country, count: distribucion[country] }));
@@ -191,17 +191,17 @@ export class DashboardComponent implements OnInit {
       this.distribucionGenero['Other'] || 0
     ];
 
-    this.edadChartData.datasets[0].data = [this.promedioEdad]; // ACTUALIZA EL GRÁFICO DE EDAD
+    this.edadChartData.datasets[0].data = [this.promedioEdad];
 
-    // ACTUALIZAR GRÁFICO DE CIUDADES
+
     this.ciudadChartData.labels = this.ciudades.map(ciudad => ciudad.name);
     this.ciudadChartData.datasets[0].data = this.ciudades.map(ciudad => ciudad.count);
 
-    // ACTUALIZAR GRÁFICO DE PAÍSES
+
     this.paisChartData.labels = this.paises.map(pais => pais.name);
     this.paisChartData.datasets[0].data = this.paises.map(pais => pais.count);
 
-    // ACTUALIZAR GRÁFICO DE TELÉFONOS
+
     this.telefonoChartData.labels = this.telefonos.map(telefono => telefono.prefix);
     this.telefonoChartData.datasets[0].data = this.telefonos.map(telefono => telefono.count);
   }
@@ -213,7 +213,7 @@ export class DashboardComponent implements OnInit {
       this.mostrarEdadesIndividuales = !this.mostrarEdadesIndividuales;
 
       if (this.mostrarEdadesIndividuales) {
-        // Mostrar todas las edades individuales en el gráfico de barras
+
         this.edadChartData = {
           labels: this.edadesIndividuales.map((_, index) => `Cliente ${index + 1}`),
           datasets: [
@@ -225,7 +225,7 @@ export class DashboardComponent implements OnInit {
           ]
         };
       } else {
-        // Volver al promedio de edad
+
         this.edadChartData = {
           labels: ['Promedio de Edad'],
           datasets: [

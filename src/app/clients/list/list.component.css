@@ -40,7 +40,7 @@
 /* --- Contenedor de la tabla para hacerla responsiva --- */
 .client-table-container {
   width: 100%;
-  overflow-x: auto; /* Para evitar que los botones se salgan del contenedor */
+  overflow-x: auto; 
 }
 
 /* --- Tabla responsiva --- */
@@ -55,7 +55,7 @@
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
-  white-space: nowrap; /* Para que los botones no se corten */
+  white-space: nowrap;
 }
 
 .client-table th {
@@ -67,7 +67,7 @@
 /* --- Contenedor de botones dentro de la tabla --- */
 .client-actions {
   display: flex;
-  gap: 8px; /* Espacio entre botones */
+  gap: 8px;
   justify-content: center;
 }
 
@@ -83,7 +83,7 @@
 
 /* --- Estilos específicos de los botones --- */
 .client-btn-warning {
-  background-color: #ffc107; /* Amarillo */
+  background-color: #ffc107;
   color: black;
 }
 
@@ -92,7 +92,7 @@
 }
 
 .client-btn-danger {
-  background-color: #dc3545; /* Rojo */
+  background-color: #dc3545;
   color: white;
 }
 
@@ -113,7 +113,7 @@
   }
 
   .client-actions {
-    flex-direction: column; /* En móviles los botones se apilan */
+    flex-direction: column;
     gap: 5px;
   }
 
@@ -148,7 +148,7 @@
   }
 
   .client-actions {
-    flex-direction: column; /* Los botones se apilan en pantallas pequeñas */
+    flex-direction: column;
     align-items: center;
   }
 
